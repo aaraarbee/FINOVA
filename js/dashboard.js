@@ -14,7 +14,8 @@ import {
   collection,
   getDocs,
   query,
-  where
+  where,
+  limit
 
 }
 
@@ -44,6 +45,9 @@ const savingsAmount =
 const budgetAmount =
   document.getElementById("budgetAmount");
 
+const dashboardTransactionBody =
+  document.getElementById("dashboardTransactionBody");
+
 /* =========================
    AUTH CHECK
 ========================= */
@@ -58,7 +62,8 @@ onAuthStateChanged(auth, async (user) => {
 
   else {
 
-    window.location.href = "login.html";
+    window.location.href =
+      "login.html";
 
   }
 
@@ -70,49 +75,176 @@ onAuthStateChanged(auth, async (user) => {
 
 async function loadDashboardData(uid) {
 
-  const q = query(
+  try {
 
-    collection(db, "transactions"),
+    /* TRANSACTIONS */
 
-    where("uid", "==", uid)
+    const transactionQuery = query(
 
-  );
+      collection(db, "transactions"),
 
-  const querySnapshot =
-    await getDocs(q);
+      where("uid", "==", uid)
 
-  let totalSpending = 0;
+    );
 
-  querySnapshot.forEach((docItem) => {
+    const transactionSnapshot =
+      await getDocs(transactionQuery);
 
-    const data = docItem.data();
+    let totalSpending = 0;
 
-    totalSpending += Number(data.amount);
+    transactionSnapshot.forEach((docItem) => {
 
-  });
+      const data = docItem.data();
 
-  /* DUMMY CALCULATIONS */
+      totalSpending +=
+        Number(data.amount);
 
-  const totalBalance = 124000;
+    });
 
-  const savings =
-    totalBalance - totalSpending;
+    /* BUDGET */
 
-  const budgetLeft =
-    40000 - totalSpending;
+    const budgetQuery = query(
 
-  /* UPDATE UI */
+      collection(db, "budgets"),
 
-  balanceAmount.innerText =
-    `₹${totalBalance.toLocaleString()}`;
+      where("uid", "==", uid)
 
-  spendingAmount.innerText =
-    `₹${totalSpending.toLocaleString()}`;
+    );
 
-  savingsAmount.innerText =
-    `₹${savings.toLocaleString()}`;
+    const budgetSnapshot =
+      await getDocs(budgetQuery);
 
-  budgetAmount.innerText =
-    `₹${budgetLeft.toLocaleString()}`;
+    let latestBudget = 0;
+
+    budgetSnapshot.forEach((docItem) => {
+
+      latestBudget =
+        Number(docItem.data().amount);
+
+    });
+
+    /* CALCULATIONS */
+
+    const totalBalance =
+      latestBudget;
+
+    const savings =
+      latestBudget - totalSpending;
+
+    const budgetLeft =
+      latestBudget - totalSpending;
+
+    /* UPDATE UI */
+
+    balanceAmount.innerText =
+      `₹${totalBalance.toLocaleString()}`;
+
+    spendingAmount.innerText =
+      `₹${totalSpending.toLocaleString()}`;
+
+    savingsAmount.innerText =
+      `₹${savings.toLocaleString()}`;
+
+    budgetAmount.innerText =
+      `₹${budgetLeft.toLocaleString()}`;
+
+    /* LOAD RECENT TRANSACTIONS */
+
+    loadRecentTransactions(uid);
+
+  }
+
+  catch (error) {
+
+    console.error(error);
+
+  }
+
+}
+
+/* =========================
+   RECENT TRANSACTIONS
+========================= */
+
+async function loadRecentTransactions(uid) {
+
+  try {
+
+    dashboardTransactionBody.innerHTML = "";
+
+    const q = query(
+
+      collection(db, "transactions"),
+
+      where("uid", "==", uid),
+
+      limit(5)
+
+    );
+
+    const querySnapshot =
+      await getDocs(q);
+
+    querySnapshot.forEach((docItem) => {
+
+      const data = docItem.data();
+
+      const row = `
+
+        <tr>
+
+          <td>
+
+            <span class="badge bg-primary">
+
+              ${data.category}
+
+            </span>
+
+          </td>
+
+          <td>
+
+            ${data.description}
+
+          </td>
+
+          <td>
+
+            ${data.date}
+
+          </td>
+
+          <td class="text-danger">
+
+            ₹${data.amount}
+
+          </td>
+
+          <td>
+
+            <span class="badge bg-success">
+
+              Completed
+
+            </span>
+
+          </td>
+
+        </tr>
+
+      `;
+
+      dashboardTransactionBody.innerHTML += row;
+
+    });
+
+  }
+
+  catch (error) {
+
+    console.error(error);
+
+  }
 
 }
