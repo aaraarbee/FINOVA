@@ -1,0 +1,202 @@
+/* =========================
+   DASHBOARD PAGE
+========================= */
+
+body {
+  background: var(--cream);
+}
+
+/* =========================
+   MAIN LAYOUT
+========================= */
+
+.main-content {
+  min-height: 100vh;
+}
+
+/* =========================
+   TOPBAR
+========================= */
+
+.topbar {
+  margin-bottom: 40px;
+}
+
+.topbar h2 {
+  font-size: 2.5rem;
+  font-weight: 800;
+  margin-bottom: 8px;
+}
+
+.topbar p {
+  margin-bottom: 0;
+}
+
+/* =========================
+   PROFILE BADGE
+========================= */
+
+.profile-badge {
+  transition: var(--transition);
+}
+
+.profile-badge:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-md);
+}
+
+/* =========================
+   FINANCE CARDS
+========================= */
+
+.finance-card {
+  min-height: 180px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.finance-card p {
+  font-weight: 600;
+  margin-bottom: 0;
+}
+
+/* =========================
+   CHART SECTION
+========================= */
+
+.chart-card {
+  min-height: 100%;
+}
+
+.chart-card h4 {
+  font-size: 1.4rem;
+  font-weight: 700;
+}
+
+.chart-card p {
+  margin-bottom: 0;
+}
+
+/* =========================
+   CHART SIZE FIX
+========================= */
+
+canvas {
+  width: 100% !important;
+  max-height: 320px;
+}
+
+/* =========================
+   TABLE SECTION
+========================= */
+
+.table-responsive {
+  overflow-x: auto;
+}
+
+.table {
+  margin-bottom: 0;
+}
+
+.table thead tr th {
+  border-bottom: none;
+  color: var(--gray);
+  font-weight: 600;
+  padding-bottom: 18px;
+}
+
+.table tbody tr {
+  transition: var(--transition);
+}
+
+.table tbody tr:hover {
+  background: rgba(88,183,168,0.06);
+}
+
+.table tbody tr td {
+  padding: 18px 12px;
+  vertical-align: middle;
+  border-color: rgba(0,0,0,0.05);
+}
+
+/* =========================
+   BADGES
+========================= */
+
+.badge {
+  padding: 10px 14px;
+  border-radius: 12px;
+  font-weight: 600;
+}
+
+/* =========================
+   CARD ANIMATION
+========================= */
+
+.finance-card,
+.chart-card {
+  animation: fadeUp 0.7s ease;
+}
+
+/* =========================
+   SIDEBAR ACTIVE LINK
+========================= */
+
+.sidebar-links li a.active {
+  box-shadow:
+    0 10px 20px rgba(15,39,71,0.2);
+}
+
+/* =========================
+   HOVER STATES
+========================= */
+
+.chart-card:hover {
+  transform: translateY(-4px);
+}
+
+/* =========================
+   SCROLLBAR
+========================= */
+
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: #ececec;
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--navy);
+  border-radius: 20px;
+}
+
+/* =========================
+   MOBILE RESPONSIVENESS
+========================= */
+
+@media (max-width: 768px) {
+
+  .topbar h2 {
+    font-size: 2rem;
+  }
+
+  .finance-card {
+    min-height: auto;
+  }
+
+  .chart-card {
+    padding: 24px;
+  }
+
+  .table thead {
+    font-size: 0.9rem;
+  }
+
+  .table tbody td {
+    font-size: 0.92rem;
+  }
+
+}

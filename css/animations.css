@@ -1,0 +1,155 @@
+/* =========================
+   FADE IN ANIMATION
+========================= */
+
+@keyframes fadeUp {
+
+  from {
+    opacity: 0;
+    transform: translateY(40px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+}
+
+/* =========================
+   FLOATING ANIMATION
+========================= */
+
+@keyframes floating {
+
+  0% {
+    transform: translateY(0px);
+  }
+
+  50% {
+    transform: translateY(-10px);
+  }
+
+  100% {
+    transform: translateY(0px);
+  }
+
+}
+
+/* =========================
+   GLOW PULSE
+========================= */
+
+@keyframes glowPulse {
+
+  0% {
+    box-shadow: 0 0 0 rgba(88,183,168,0.3);
+  }
+
+  50% {
+    box-shadow: 0 0 25px rgba(88,183,168,0.4);
+  }
+
+  100% {
+    box-shadow: 0 0 0 rgba(88,183,168,0.3);
+  }
+
+}
+
+/* =========================
+   SCALE IN
+========================= */
+
+@keyframes scaleIn {
+
+  from {
+    opacity: 0;
+    transform: scale(0.9);
+  }
+
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+
+}
+
+/* =========================
+   ANIMATION CLASSES
+========================= */
+
+.fade-up {
+  animation: fadeUp 1s ease forwards;
+}
+
+.floating {
+  animation: floating 4s ease-in-out infinite;
+}
+
+.glow-pulse {
+  animation: glowPulse 3s infinite;
+}
+
+.scale-in {
+  animation: scaleIn 0.7s ease;
+}
+
+/* =========================
+   HOVER EFFECTS
+========================= */
+
+.hover-lift {
+  transition: var(--transition);
+}
+
+.hover-lift:hover {
+  transform: translateY(-6px);
+}
+
+.hover-scale {
+  transition: var(--transition);
+}
+
+.hover-scale:hover {
+  transform: scale(1.03);
+}
+
+/* =========================
+   BUTTON HOVER GLOW
+========================= */
+
+.primary-btn:hover {
+  box-shadow:
+    0 10px 25px rgba(15,39,71,0.25);
+}
+
+/* =========================
+   CARD TRANSITIONS
+========================= */
+
+.finance-card,
+.mockup-card,
+.chart-card {
+  transition:
+    transform 0.3s ease,
+    box-shadow 0.3s ease;
+}
+
+/* =========================
+   SIDEBAR LINK TRANSITION
+========================= */
+
+.sidebar-links li a {
+  transition:
+    background 0.3s ease,
+    transform 0.3s ease,
+    color 0.3s ease;
+}
+
+/* =========================
+   PAGE LOAD ANIMATION
+========================= */
+
+body {
+  animation: fadeUp 0.7s ease;
+}

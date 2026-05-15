@@ -1,0 +1,166 @@
+:root {
+
+  --cream: #f6f1eb;
+  --navy: #0f2747;
+  --light-navy: #183b68;
+
+  --teal: #58b7a8;
+  --gold: #d8a657;
+
+  --white: #ffffff;
+  --gray: #6b7280;
+  --light-gray: #e5e7eb;
+
+  --shadow-sm: 0 4px 12px rgba(0,0,0,0.06);
+  --shadow-md: 0 10px 30px rgba(0,0,0,0.08);
+  --shadow-lg: 0 20px 40px rgba(0,0,0,0.12);
+
+  --radius-sm: 12px;
+  --radius-md: 20px;
+  --radius-lg: 32px;
+
+  --transition: all 0.3s ease;
+
+}
+
+/* =========================
+   GLOBAL RESET
+========================= */
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: "Segoe UI", sans-serif;
+  background: var(--cream);
+  color: var(--navy);
+  overflow-x: hidden;
+  min-height: 100vh;
+}
+
+/* =========================
+   CONTAINER FIX
+========================= */
+
+.container {
+  max-width: 1250px;
+}
+
+/* =========================
+   TYPOGRAPHY
+========================= */
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-weight: 700;
+  color: var(--navy);
+}
+
+p {
+  color: var(--gray);
+  line-height: 1.8;
+}
+
+/* =========================
+   HERO SECTION
+========================= */
+
+.hero-section {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.hero-title {
+  font-size: 4.5rem;
+  font-weight: 800;
+  line-height: 1.1;
+  margin-bottom: 25px;
+  color: var(--navy);
+}
+
+.hero-subtitle {
+  font-size: 1.1rem;
+  max-width: 600px;
+  margin-bottom: 40px;
+}
+
+/* =========================
+   BLUR BACKGROUND CIRCLES
+========================= */
+
+.blur-circle {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(100px);
+  z-index: -1;
+}
+
+.circle-one {
+  width: 320px;
+  height: 320px;
+  background: rgba(88,183,168,0.18);
+
+  top: 5%;
+  left: -100px;
+}
+
+.circle-two {
+  width: 280px;
+  height: 280px;
+  background: rgba(15,39,71,0.12);
+
+  bottom: 0;
+  right: -80px;
+}
+
+/* =========================
+   SECTION SPACING
+========================= */
+
+.section-padding {
+  padding: 100px 0;
+}
+
+/* =========================
+   LINKS
+========================= */
+
+a {
+  text-decoration: none;
+}
+
+/* =========================
+   DARK MODE
+========================= */
+
+.dark-mode {
+  background: #08111f;
+  color: white;
+}
+
+.dark-mode h1,
+.dark-mode h2,
+.dark-mode h3,
+.dark-mode h4,
+.dark-mode h5,
+.dark-mode h6 {
+  color: white;
+}
+
+.dark-mode p {
+  color: #cbd5e1;
+}
