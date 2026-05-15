@@ -1,19 +1,123 @@
+import {
+
+  db,
+  auth
+
+} from "./firebase.js";
+
+import {
+
+  collection,
+  getDocs,
+  query,
+  where
+
+}
+
+from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
+import {
+
+  onAuthStateChanged
+
+}
+
+from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+
 /* =========================
-   SPENDING LINE CHART
+   LOAD CHARTS
 ========================= */
 
-const spendingCanvas = document.getElementById("spendingChart");
+onAuthStateChanged(auth, async (user) => {
 
-if (spendingCanvas) {
+  if (user) {
 
-  const ctx = spendingCanvas.getContext("2d");
+    loadCharts(user.uid);
 
-  /* GRADIENT */
+  }
 
-  const gradient = ctx.createLinearGradient(0, 0, 0, 400);
+});
 
-  gradient.addColorStop(0, "rgba(88,183,168,0.35)");
-  gradient.addColorStop(1, "rgba(88,183,168,0)");
+/* =========================
+   CHART LOGIC
+========================= */
+
+async function loadCharts(uid) {
+
+  const q = query(
+
+    collection(db, "transactions"),
+
+    where("uid", "==", uid)
+
+  );
+
+  const querySnapshot =
+    await getDocs(q);
+
+  let categoryTotals = {};
+
+  let monthlyTotals = {};
+
+  querySnapshot.forEach((docItem) => {
+
+    const data = docItem.data();
+
+    const amount =
+      Number(data.amount);
+
+    /* CATEGORY */
+
+    if (categoryTotals[data.category]) {
+
+      categoryTotals[data.category] += amount;
+
+    }
+
+    else {
+
+      categoryTotals[data.category] = amount;
+
+    }
+
+    /* MONTH */
+
+    const month =
+      new Date(data.date)
+      .toLocaleString("default", {
+
+        month: "short"
+
+      });
+
+    if (monthlyTotals[month]) {
+
+      monthlyTotals[month] += amount;
+
+    }
+
+    else {
+
+      monthlyTotals[month] = amount;
+
+    }
+
+  });
+
+  createLineChart(monthlyTotals);
+
+  createPieChart(categoryTotals);
+
+}
+
+/* =========================
+   LINE CHART
+========================= */
+
+function createLineChart(monthlyTotals) {
+
+  const ctx =
+    document.getElementById("spendingChart");
 
   new Chart(ctx, {
 
@@ -21,48 +125,26 @@ if (spendingCanvas) {
 
     data: {
 
-      labels: [
-        "Jan",
-        "Feb",
-        "Mar",
-        "Apr",
-        "May",
-        "Jun"
-      ],
+      labels:
+        Object.keys(monthlyTotals),
 
       datasets: [
 
         {
-          label: "Expenses",
 
-          data: [
-            12000,
-            19000,
-            14000,
-            24000,
-            18000,
-            26000
-          ],
+          label: "Monthly Spending",
 
-          borderColor: "#0f2747",
+          data:
+            Object.values(monthlyTotals),
 
-          backgroundColor: gradient,
+          borderColor: "#58b7a8",
 
-          fill: true,
+          backgroundColor:
+            "rgba(88,183,168,0.2)",
 
           tension: 0.4,
 
-          borderWidth: 3,
-
-          pointBackgroundColor: "#58b7a8",
-
-          pointBorderColor: "#ffffff",
-
-          pointBorderWidth: 3,
-
-          pointRadius: 6,
-
-          pointHoverRadius: 8
+          fill: true
 
         }
 
@@ -72,45 +154,7 @@ if (spendingCanvas) {
 
     options: {
 
-      responsive: true,
-
-      maintainAspectRatio: false,
-
-      plugins: {
-
-        legend: {
-          display: false
-        }
-
-      },
-
-      scales: {
-
-        x: {
-
-          grid: {
-            display: false
-          },
-
-          ticks: {
-            color: "#6b7280"
-          }
-
-        },
-
-        y: {
-
-          grid: {
-            color: "rgba(0,0,0,0.05)"
-          },
-
-          ticks: {
-            color: "#6b7280"
-          }
-
-        }
-
-      }
+      responsive: true
 
     }
 
@@ -119,40 +163,29 @@ if (spendingCanvas) {
 }
 
 /* =========================
-   CATEGORY DOUGHNUT CHART
+   PIE CHART
 ========================= */
 
-const categoryCanvas = document.getElementById("categoryChart");
+function createPieChart(categoryTotals) {
 
-if (categoryCanvas) {
+  const ctx =
+    document.getElementById("categoryChart");
 
-  const categoryCtx = categoryCanvas.getContext("2d");
-
-  new Chart(categoryCtx, {
+  new Chart(ctx, {
 
     type: "doughnut",
 
     data: {
 
-      labels: [
-        "Shopping",
-        "Food",
-        "Bills",
-        "Travel",
-        "Entertainment"
-      ],
+      labels:
+        Object.keys(categoryTotals),
 
       datasets: [
 
         {
 
-          data: [
-            32,
-            20,
-            18,
-            15,
-            15
-          ],
+          data:
+            Object.values(categoryTotals),
 
           backgroundColor: [
 
@@ -164,9 +197,7 @@ if (categoryCanvas) {
 
           ],
 
-          borderWidth: 0,
-
-          hoverOffset: 10
+          borderWidth: 0
 
         }
 
@@ -178,33 +209,7 @@ if (categoryCanvas) {
 
       responsive: true,
 
-      cutout: "72%",
-
-      plugins: {
-
-        legend: {
-
-          position: "bottom",
-
-          labels: {
-
-            padding: 18,
-
-            usePointStyle: true,
-
-            pointStyle: "circle",
-
-            color: "#6b7280",
-
-            font: {
-              size: 13
-            }
-
-          }
-
-        }
-
-      }
+      cutout: "70%"
 
     }
 

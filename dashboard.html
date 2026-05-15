@@ -20,7 +20,7 @@
   <link rel="stylesheet" href="css/animations.css">
   <link rel="stylesheet" href="css/responsive.css">
 
-  <!-- Icons -->
+  <!-- Font Awesome -->
 
   <link rel="stylesheet"
     href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
@@ -44,8 +44,6 @@
       <span>Finova</span>
 
     </div>
-
-    <!-- LINKS -->
 
     <ul class="sidebar-links">
 
@@ -110,12 +108,10 @@
         </h2>
 
         <p>
-          Welcome back, manage your finances smartly.
+          Real-time overview of your finances.
         </p>
 
       </div>
-
-      <!-- PROFILE -->
 
       <div class="profile-badge">
 
@@ -125,9 +121,9 @@
 
         <div>
 
-          <h6>Raghav</h6>
+          <h6>Finova User</h6>
 
-          <small>Premium User</small>
+          <small>Firebase Connected</small>
 
         </div>
 
@@ -148,11 +144,11 @@
           <h5>Total Balance</h5>
 
           <h2 id="balanceAmount">
-            ₹1,24,000
+            ₹0
           </h2>
 
           <p class="text-success mt-2">
-            +12% this month
+            Dynamic Firebase data
           </p>
 
         </div>
@@ -165,14 +161,14 @@
 
         <div class="finance-card fade-up">
 
-          <h5>Monthly Spending</h5>
+          <h5>Total Spending</h5>
 
           <h2 id="spendingAmount">
-            ₹24,000
+            ₹0
           </h2>
 
           <p class="text-danger mt-2">
-            -4% from last month
+            Live transaction tracking
           </p>
 
         </div>
@@ -188,11 +184,11 @@
           <h5>Total Savings</h5>
 
           <h2 id="savingsAmount">
-            ₹52,000
+            ₹0
           </h2>
 
           <p class="text-success mt-2">
-            +8% growth
+            Auto calculated
           </p>
 
         </div>
@@ -208,11 +204,11 @@
           <h5>Budget Left</h5>
 
           <h2 id="budgetAmount">
-            ₹16,500
+            ₹0
           </h2>
 
           <p class="text-warning mt-2">
-            78% utilized
+            Budget planner integration
           </p>
 
         </div>
@@ -238,7 +234,7 @@
             </h4>
 
             <p>
-              Monthly financial overview
+              Generated from your transactions
             </p>
 
           </div>
@@ -256,7 +252,7 @@
         <div class="chart-card">
 
           <h4 class="mb-4">
-            Spending Categories
+            Category Breakdown
           </h4>
 
           <canvas id="categoryChart"></canvas>
@@ -271,27 +267,17 @@
 
     <div class="chart-card mt-4">
 
-      <div class="d-flex justify-content-between align-items-center mb-4">
+      <div class="mb-4">
 
-        <div>
+        <h4>
+          Recent Transactions
+        </h4>
 
-          <h4>
-            Recent Transactions
-          </h4>
-
-          <p>
-            Latest financial activity
-          </p>
-
-        </div>
-
-        <button class="primary-btn">
-          Add Transaction
-        </button>
+        <p>
+          Latest financial activity
+        </p>
 
       </div>
-
-      <!-- TABLE -->
 
       <div class="table-responsive">
 
@@ -311,79 +297,7 @@
 
           </thead>
 
-          <tbody>
-
-            <tr>
-
-              <td>
-                <span class="badge bg-primary">
-                  Shopping
-                </span>
-              </td>
-
-              <td>Amazon Purchase</td>
-
-              <td>14 May 2026</td>
-
-              <td class="text-danger">
-                - ₹2,499
-              </td>
-
-              <td>
-                <span class="badge bg-success">
-                  Completed
-                </span>
-              </td>
-
-            </tr>
-
-            <tr>
-
-              <td>
-                <span class="badge bg-warning text-dark">
-                  Food
-                </span>
-              </td>
-
-              <td>Restaurant Dinner</td>
-
-              <td>12 May 2026</td>
-
-              <td class="text-danger">
-                - ₹850
-              </td>
-
-              <td>
-                <span class="badge bg-success">
-                  Completed
-                </span>
-              </td>
-
-            </tr>
-
-            <tr>
-
-              <td>
-                <span class="badge bg-info text-dark">
-                  Salary
-                </span>
-              </td>
-
-              <td>Internship Payment</td>
-
-              <td>10 May 2026</td>
-
-              <td class="text-success">
-                + ₹18,000
-              </td>
-
-              <td>
-                <span class="badge bg-success">
-                  Credited
-                </span>
-              </td>
-
-            </tr>
+          <tbody id="dashboardTransactionBody">
 
           </tbody>
 
@@ -397,7 +311,11 @@
 
   <!-- JS -->
 
-  <script src="js/charts.js"></script>
+  <script type="module" src="js/firebase.js"></script>
+
+  <script type="module" src="js/dashboard.js"></script>
+
+  <script type="module" src="js/charts.js"></script>
 
 </body>
 
